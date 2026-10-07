@@ -1,15 +1,15 @@
 import Header from "../src/components/Header.jsx";
 import Meals from "../src/components/Meals.jsx";
 import Modal from "./components/Modal.jsx";
-import { ContextProvider } from "./store/Context.jsx";
+import { ModalContextProvider } from "./store/ModalContext.jsx";
 
 function App() {
   return (
-    <ContextProvider>
+    <ModalContextProvider>
       <Header />
       <Modal />
       <Meals />
-    </ContextProvider>
+    </ModalContextProvider>
   );
 }
 
