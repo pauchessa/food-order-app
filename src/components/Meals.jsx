@@ -1,7 +1,6 @@
 import MealCard from "../components/MealCard.jsx";
-import { useState, useEffect } from "react";
-export default function Meals() {
-  const [meals, setMeals] = useState([]);
+import { useEffect } from "react";
+export default function Meals({ meals, setMeals }) {
   useEffect(() => {
     async function fetchMeals() {
       const response = await fetch("http://localhost:3000/meals");
