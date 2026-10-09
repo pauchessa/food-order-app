@@ -2,7 +2,11 @@ import { CartContext } from "./../store/CartContext.jsx";
 import { use } from "react";
 export default function Cart() {
   const { selectedMeals } = use(CartContext);
-
+  console.log(selectedMeals);
+  const totalPrice = selectedMeals.reduce(
+    (totalSum, currentMeal) => totalSum + +currentMeal.price,
+    0,
+  );
   const cart = selectedMeals.length ? (
     selectedMeals.map((meal) => (
       <li key={meal.id} className="cart-item">
@@ -22,7 +26,7 @@ export default function Cart() {
     <div className="cart">
       <h2>Your Cart</h2>
       <ul>{cart}</ul>
-      <p className="cart-total"></p>
+      <p className="cart-total">${totalPrice}</p>
     </div>
   );
 }
