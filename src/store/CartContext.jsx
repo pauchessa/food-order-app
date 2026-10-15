@@ -3,7 +3,6 @@ import { createContext, useReducer } from "react";
 export const CartContext = createContext({
   selectedMeals: [],
   handleAddMeal() {},
-  handleDeleteMeal() {},
   handleIncreaseQuantity() {},
   handleDecreaseQuantity() {},
 });
@@ -13,7 +12,7 @@ function cartReducer(state, action) {
     let newMeal = undefined;
     if (!state.selectedMeals.some((meal) => meal.id === action.payload.id)) {
       newMeal = { ...action.payload, quantity: 1 };
-      console.log("meal.quantity: 1", newMeal);
+
       return { selectedMeals: [...state.selectedMeals, { ...newMeal }] };
     } else {
       const newSelectedMeals = state.selectedMeals.map((meal) => {
@@ -26,13 +25,24 @@ function cartReducer(state, action) {
     }
   }
 
-  if (action.type === "delete") {
-  }
-
-  if (action.type == "increase") {
+  if (action.type === "increase") {
+    const newSelectedMeals = state.selectedMeals.map((meal) => {
+      if (meal.id === action.payload) {
+        const newMeal = { ...meal, quantity: meal.quantity + 1 };
+        return newMeal;
+      }
+    });
+    return { selectedMeals: [...newSelectedMeals] };
   }
 
   if (action.type === "decrease") {
+    const newSelectedMeals = state.selectedMeals.map((meal) => {
+      if (meal.id === action.payload) {
+        const newMeal = { ...meal, quantity: meal.quantity - 1 };
+        return newMeal;
+      }
+    });
+    return { selectedMeals: [...newSelectedMeals] };
   }
 
   return state;
@@ -45,13 +55,6 @@ export function CartContextProvider({ children }) {
     dispatch({
       type: "add",
       payload: meal,
-    });
-  }
-
-  function handleDeleteMeal(id) {
-    dispatch({
-      type: "delete",
-      payload: id,
     });
   }
 
@@ -72,7 +75,6 @@ export function CartContextProvider({ children }) {
   const ctxValues = {
     selectedMeals: cartState.selectedMeals,
     handleAddMeal,
-    handleDeleteMeal,
     handleIncreaseQuantity,
     handleDecreaseQuantity,
   };

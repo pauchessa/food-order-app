@@ -16,14 +16,7 @@ export default function Cart() {
         <div className="cart-item-actions">
           <button onClick={() => handleDecreaseQuantity(meal.id)}>-</button>
           <p>{meal.quantity}</p>
-          <button
-            onClick={() => {
-              meal.quantity;
-              handleIncreaseQuantity(meal.id);
-            }}
-          >
-            +
-          </button>
+          <button onClick={() => handleIncreaseQuantity(meal.id)}>+</button>
         </div>
       </li>
     ))
