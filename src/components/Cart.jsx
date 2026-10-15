@@ -1,10 +1,12 @@
 import { CartContext } from "./../store/CartContext.jsx";
 import { use } from "react";
 export default function Cart() {
-  const { selectedMeals } = use(CartContext);
+  const { selectedMeals, handleIncreaseQuantity, handleDecreaseQuantity } =
+    use(CartContext);
   console.log(selectedMeals);
   const totalPrice = selectedMeals.reduce(
-    (totalSum, currentMeal) => totalSum + +currentMeal.price,
+    (totalSum, currentMeal) =>
+      totalSum + +currentMeal.price * currentMeal.quantity,
     0,
   );
   const cart = selectedMeals.length ? (
@@ -12,9 +14,16 @@ export default function Cart() {
       <li key={meal.id} className="cart-item">
         <p>{meal.name}</p>
         <div className="cart-item-actions">
-          <button>-</button>
-          <p>1</p>
-          <button>+</button>
+          <button onClick={() => handleDecreaseQuantity(meal.id)}>-</button>
+          <p>{meal.quantity}</p>
+          <button
+            onClick={() => {
+              meal.quantity;
+              handleIncreaseQuantity(meal.id);
+            }}
+          >
+            +
+          </button>
         </div>
       </li>
     ))
