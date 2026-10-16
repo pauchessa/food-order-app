@@ -41,7 +41,10 @@ function cartReducer(state, action) {
         return newMeal;
       } else return meal;
     });
-    return { selectedMeals: [...newSelectedMeals] };
+    const filteredSelectedMeals = newSelectedMeals.filter(
+      (meal) => meal.quantity > 0,
+    );
+    return { selectedMeals: [...filteredSelectedMeals] };
   }
 
   return state;
