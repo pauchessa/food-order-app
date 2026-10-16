@@ -1,8 +1,9 @@
 import { use, useRef, useEffect } from "react";
 import Cart from "../components/Cart.jsx";
+import CheckoutForm from "./CheckoutForm.jsx";
 import { ModalContext } from "../store/ModalContext.jsx";
 
-export default function Modal({ meals }) {
+export default function Modal() {
   const dialog = useRef();
   const { isOpen, handleCloseModal } = use(ModalContext);
 
@@ -12,7 +13,7 @@ export default function Modal({ meals }) {
   }, [isOpen]);
   return (
     <dialog ref={dialog} onCancel={handleCloseModal} className="modal">
-      <Cart meals={meals} />
+      <Cart />
       <div className="modal-actions">
         <button className="text-button" onClick={handleCloseModal}>
           Close

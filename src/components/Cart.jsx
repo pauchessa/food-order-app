@@ -3,7 +3,6 @@ import { use } from "react";
 export default function Cart() {
   const { selectedMeals, handleIncreaseQuantity, handleDecreaseQuantity } =
     use(CartContext);
-  console.log(selectedMeals);
   const totalPrice = selectedMeals.reduce(
     (totalSum, currentMeal) =>
       totalSum + +currentMeal.price * currentMeal.quantity,
