@@ -12,14 +12,13 @@ function cartReducer(state, action) {
     let newMeal = undefined;
     if (!state.selectedMeals.some((meal) => meal.id === action.payload.id)) {
       newMeal = { ...action.payload, quantity: 1 };
-
-      return { selectedMeals: [...state.selectedMeals, { ...newMeal }] };
+      return { selectedMeals: [...state.selectedMeals, newMeal] };
     } else {
       const newSelectedMeals = state.selectedMeals.map((meal) => {
         if (meal.id === action.payload.id) {
           newMeal = { ...action.payload, quantity: meal.quantity + 1 };
           return newMeal;
-        }
+        } else return meal;
       });
       return { selectedMeals: [...newSelectedMeals] };
     }
@@ -30,7 +29,7 @@ function cartReducer(state, action) {
       if (meal.id === action.payload) {
         const newMeal = { ...meal, quantity: meal.quantity + 1 };
         return newMeal;
-      }
+      } else return meal;
     });
     return { selectedMeals: [...newSelectedMeals] };
   }
@@ -40,7 +39,7 @@ function cartReducer(state, action) {
       if (meal.id === action.payload) {
         const newMeal = { ...meal, quantity: meal.quantity - 1 };
         return newMeal;
-      }
+      } else return meal;
     });
     return { selectedMeals: [...newSelectedMeals] };
   }
