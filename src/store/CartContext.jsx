@@ -5,6 +5,7 @@ export const CartContext = createContext({
   handleAddMeal() {},
   handleIncreaseQuantity() {},
   handleDecreaseQuantity() {},
+  calculateTotalPrice() {},
 });
 
 function cartReducer(state, action) {
@@ -74,11 +75,21 @@ export function CartContextProvider({ children }) {
     });
   }
 
+  function calculateTotalPrice(selectedMeals) {
+    const totalPrice = selectedMeals.reduce(
+      (totalSum, currentMeal) =>
+        totalSum + +currentMeal.price * currentMeal.quantity,
+      0,
+    );
+    return totalPrice;
+  }
+
   const ctxValues = {
     selectedMeals: cartState.selectedMeals,
     handleAddMeal,
     handleIncreaseQuantity,
     handleDecreaseQuantity,
+    calculateTotalPrice,
   };
   return <CartContext value={ctxValues}>{children}</CartContext>;
 }
