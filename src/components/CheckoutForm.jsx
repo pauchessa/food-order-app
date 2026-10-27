@@ -6,10 +6,17 @@ export default function CheckoutForm() {
   function handleSubmit(formData) {
     const fullName = formData.get("full-name");
     const email = formData.get("email");
-    const address = formData.get("address");
+    const street = formData.get("address");
     const postalCode = formData.get("postal-code");
     const city = formData.get("city");
-    console.log(fullName, email);
+    const customer = {
+      fullName,
+      email,
+      street,
+      postalCode,
+      city,
+    };
+    console.log(customer);
   }
   return (
     <form id="checkout-form" action={handleSubmit}>
@@ -25,7 +32,7 @@ export default function CheckoutForm() {
       </div>
       <div className="control">
         <label>Street</label>
-        <input name="address" />
+        <input name="street" />
       </div>
       <div className="control-row">
         <div className="control">
