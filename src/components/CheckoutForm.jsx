@@ -1,7 +1,9 @@
 import { use } from "react";
 import { CartContext } from "./../store/CartContext.jsx";
+import { ModalContext } from "./../store/ModalContext.jsx";
 export default function CheckoutForm() {
   const { selectedMeals, calculateTotalPrice } = use(CartContext);
+  const { setModalContent } = use(ModalContext);
   const totalPrice = calculateTotalPrice(selectedMeals);
   async function handleSubmit(formData) {
     const name = formData.get("full-name");
@@ -17,17 +19,21 @@ export default function CheckoutForm() {
       city,
     };
     const orderData = { order: { customer, items: selectedMeals } };
-
-    const response = await fetch("http://localhost:3000/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(orderData),
-    });
-    const res = await response.json();
-    if (!response.ok) {
-      throw new Error(res.message);
+    try {
+      const response = await fetch("http://localhost:3000/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      });
+      const res = await response.json();
+      if (!response.ok) {
+        throw new Error(res.message);
+      }
+      setModalContent("success");
+    } catch (error) {
+      setModalContent("error", error);
     }
   }
   return (

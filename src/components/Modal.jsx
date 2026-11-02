@@ -16,16 +16,25 @@ export default function Modal() {
     <dialog ref={dialog} onCancel={handleCloseModal} className="modal">
       {content === "cart" && <Cart />}
       {content === "checkout" && <CheckoutForm />}
+      {content === "success" && (
+        <div>
+          <h2>Success!</h2>
+          <p>Your order was submitted successfully.</p>
+        </div>
+      )}
       <div className="modal-actions">
-        <button
-          className="text-button"
-          onClick={() => {
-            handleCloseModal();
-            setModalContent("cart");
-          }}
-        >
-          Close
-        </button>
+        {content === "cart" ||
+          (content === "checkout" && (
+            <button
+              className="text-button"
+              onClick={() => {
+                handleCloseModal();
+                setModalContent("cart");
+              }}
+            >
+              Close
+            </button>
+          ))}
         {content === "cart" && (
           <button
             className="button"
@@ -37,6 +46,17 @@ export default function Modal() {
         {content === "checkout" && (
           <button className="button" form="checkout-form">
             Submit form
+          </button>
+        )}
+        {content === "success" && (
+          <button
+            className="button"
+            onClick={() => {
+              handleCloseModal();
+              setModalContent("cart");
+            }}
+          >
+            Close
           </button>
         )}
       </div>
