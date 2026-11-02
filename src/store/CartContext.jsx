@@ -6,6 +6,7 @@ export const CartContext = createContext({
   handleIncreaseQuantity() {},
   handleDecreaseQuantity() {},
   calculateTotalPrice() {},
+  clearCart() {},
 });
 
 function cartReducer(state, action) {
@@ -48,6 +49,10 @@ function cartReducer(state, action) {
     return { selectedMeals: [...filteredSelectedMeals] };
   }
 
+  if (action.type === "clear") {
+    return { selectedMeals: [] };
+  }
+
   return state;
 }
 
@@ -84,12 +89,19 @@ export function CartContextProvider({ children }) {
     return totalPrice;
   }
 
+  function clearCart() {
+    dispatch({
+      type: "clear",
+    });
+  }
+
   const ctxValues = {
     selectedMeals: cartState.selectedMeals,
     handleAddMeal,
     handleIncreaseQuantity,
     handleDecreaseQuantity,
     calculateTotalPrice,
+    clearCart,
   };
   return <CartContext value={ctxValues}>{children}</CartContext>;
 }

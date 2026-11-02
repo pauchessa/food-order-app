@@ -2,11 +2,13 @@ import { use, useRef, useEffect } from "react";
 import Cart from "../components/Cart.jsx";
 import CheckoutForm from "./CheckoutForm.jsx";
 import { ModalContext } from "../store/ModalContext.jsx";
+import { CartContext } from "./../store/CartContext.jsx";
 
 export default function Modal() {
   const dialog = useRef();
   const { isOpen, handleCloseModal, content, setModalContent } =
     use(ModalContext);
+  const { clearCart } = use(CartContext);
 
   useEffect(() => {
     if (isOpen) dialog.current.showModal();
@@ -23,18 +25,17 @@ export default function Modal() {
         </div>
       )}
       <div className="modal-actions">
-        {content === "cart" ||
-          (content === "checkout" && (
-            <button
-              className="text-button"
-              onClick={() => {
-                handleCloseModal();
-                setModalContent("cart");
-              }}
-            >
-              Close
-            </button>
-          ))}
+        {(content === "cart" || content === "checkout") && (
+          <button
+            className="text-button"
+            onClick={() => {
+              handleCloseModal();
+              setModalContent("cart");
+            }}
+          >
+            Close
+          </button>
+        )}
         {content === "cart" && (
           <button
             className="button"
@@ -53,6 +54,7 @@ export default function Modal() {
             className="button"
             onClick={() => {
               handleCloseModal();
+              clearCart();
               setModalContent("cart");
             }}
           >
