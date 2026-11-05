@@ -33,7 +33,7 @@ export default function CheckoutForm() {
       }
       setModalContent("success");
     } catch (error) {
-      setModalContent("error", error);
+      setModalContent("error", error.message);
     }
   }
   return (

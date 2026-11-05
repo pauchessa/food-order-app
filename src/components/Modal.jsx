@@ -6,7 +6,7 @@ import { CartContext } from "./../store/CartContext.jsx";
 
 export default function Modal() {
   const dialog = useRef();
-  const { isOpen, handleCloseModal, content, setModalContent } =
+  const { isOpen, handleCloseModal, content, setModalContent, message } =
     use(ModalContext);
   const { clearCart } = use(CartContext);
 
@@ -22,6 +22,12 @@ export default function Modal() {
         <div>
           <h2>Success!</h2>
           <p>Your order was submitted successfully.</p>
+        </div>
+      )}
+      {content === "error" && (
+        <div>
+          <h2>Unable to place your order</h2>
+          <p>{message} Please try again.</p>
         </div>
       )}
       <div className="modal-actions">
@@ -60,6 +66,27 @@ export default function Modal() {
           >
             Close
           </button>
+        )}
+        {content === "error" && (
+          <>
+            <button
+              className="text-button"
+              onClick={() => {
+                setModalContent("cart");
+              }}
+            >
+              Back to cart
+            </button>
+            <button
+              className="button"
+              onClick={() => {
+                handleCloseModal();
+                setModalContent("checkout");
+              }}
+            >
+              Close
+            </button>
+          </>
         )}
       </div>
     </dialog>

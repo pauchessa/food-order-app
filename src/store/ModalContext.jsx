@@ -6,6 +6,7 @@ export const ModalContext = createContext({
   handleCloseModal() {},
   content: "cart",
   setModalContent() {},
+  message: null,
 });
 
 function ModalReducer(state, action) {
@@ -18,7 +19,7 @@ function ModalReducer(state, action) {
   }
 
   if (action.type === "setContent") {
-    return { ...state, content: action.payload };
+    return { ...state, content: action.payload, message: action.message };
   }
 
   return state;
@@ -28,6 +29,7 @@ export function ModalContextProvider({ children }) {
   const [modalState, dispatch] = useReducer(ModalReducer, {
     isOpen: false,
     content: "cart",
+    message: null,
   });
 
   function handleOpenModal() {
@@ -42,10 +44,11 @@ export function ModalContextProvider({ children }) {
     });
   }
 
-  function setModalContent(content) {
+  function setModalContent(content, errorMessage = null) {
     dispatch({
       type: "setContent",
       payload: content,
+      message: errorMessage,
     });
   }
 
@@ -55,6 +58,7 @@ export function ModalContextProvider({ children }) {
     handleCloseModal,
     content: modalState.content,
     setModalContent,
+    message: modalState.message,
   };
 
   return <ModalContext value={ctxValues}>{children}</ModalContext>;
