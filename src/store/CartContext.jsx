@@ -86,7 +86,7 @@ export function CartContextProvider({ children }) {
         totalSum + +currentMeal.price * currentMeal.quantity,
       0,
     );
-    return totalPrice;
+    return +totalPrice.toFixed(2);
   }
 
   function clearCart() {
